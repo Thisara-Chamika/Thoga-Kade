@@ -100,7 +100,7 @@ public class OrderFormController implements Initializable {
         ));
 
         orderTbl.setItems(FXCollections.observableArrayList(cartTM));
-
+        calNetTotal();
     }
 
     @FXML
@@ -170,6 +170,15 @@ public class OrderFormController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void calNetTotal(){
+        Double netTotal =0.0;
+        for (CartTM tm : cartTM){
+            netTotal+= tm.getTotal();
+        }
+
+        lblNetPrice.setText(netTotal.toString());
     }
 
 }
