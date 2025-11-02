@@ -12,9 +12,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import model.CartTM;
-import model.Customer;
-import model.Item;
+import model.*;
 import service.ServiceFactory;
 import service.SuperService;
 import service.custom.CustomerService;
@@ -25,6 +23,7 @@ import util.ServiceEnum;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -78,6 +77,9 @@ public class OrderFormController implements Initializable {
     @FXML
     private JFXTextField txtUnitPrice;
 
+    @FXML
+    private JFXTextField txtOrderId;
+
     CustomerService service = ServiceFactory.getInstance().getFactory(ServiceEnum.CUSTOMER);
     ItemService service1 = ServiceFactory.getInstance().getFactory(ServiceEnum.ITEM);
 
@@ -105,6 +107,23 @@ public class OrderFormController implements Initializable {
 
     @FXML
     void placeOrderbtnOnAction(ActionEvent event) {
+        String orderId = txtOrderId.getText();
+        Date date = new Date();
+        String customerId = combCustomer.getValue().toString();
+
+        ArrayList<OrderDetail> orderDetails = new ArrayList<>();
+
+        cartTM.forEach( cartTM1 -> {
+            orderDetails.add(new OrderDetail(
+                    txtOrderId.getText(),
+                    cartTM1.getCode(),
+                    cartTM1.getQty(),
+                    cartTM1.getUnitPrice()
+            ));
+        });
+
+        Order order = new Order(orderId,date,customerId,orderDetails);
+        System.out.println(order);
 
     }
 
