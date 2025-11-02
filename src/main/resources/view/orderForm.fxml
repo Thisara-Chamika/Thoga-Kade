@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="522.0" prefWidth="567.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.OrderFormController">
+   <children>
+      <JFXTextField fx:id="txtCusName" editable="false" layoutX="122.0" layoutY="61.0" prefHeight="25.0" prefWidth="128.0" text="Name" />
+      <JFXComboBox fx:id="combCustomer" layoutX="24.0" layoutY="61.0" prefHeight="25.0" prefWidth="70.0" promptText="ID" />
+      <JFXTextField fx:id="txtAddress" editable="false" layoutX="288.0" layoutY="61.0" prefHeight="25.0" prefWidth="128.0" text="Address" />
+      <JFXTextField fx:id="txtSalary" editable="false" layoutX="448.0" layoutY="61.0" prefHeight="25.0" prefWidth="91.0" text="Salary" />
+      <JFXComboBox fx:id="comBItem" layoutX="27.0" layoutY="140.0" prefHeight="25.0" prefWidth="70.0" promptText="code" />
+      <JFXTextField fx:id="txtDescription" editable="false" layoutX="126.0" layoutY="140.0" prefHeight="26.0" prefWidth="186.0" text="Description" />
+      <JFXTextField fx:id="txtQtyOnHand" editable="false" layoutX="349.0" layoutY="140.0" prefHeight="26.0" prefWidth="58.0" text="Stocks" />
+      <JFXTextField fx:id="txtUnitPrice" editable="false" layoutX="449.0" layoutY="140.0" prefHeight="25.0" prefWidth="91.0" text="Unit Price" />
+      <JFXButton layoutX="459.0" layoutY="203.0" onAction="#addToCartBtnOnAction" prefHeight="26.0" prefWidth="84.0" style="-fx-background-color: #fbc531;" text="Add to Cart" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </JFXButton>
+      <JFXTextField fx:id="txtQuantity" layoutX="375.0" layoutY="200.0" prefHeight="26.0" prefWidth="58.0" promptText="Qty" />
+      <TableView fx:id="orderTbl" layoutX="38.0" layoutY="245.0" prefHeight="200.0" prefWidth="494.0" stylesheets="@../css/style.css">
+        <columns>
+          <TableColumn fx:id="colCode" prefWidth="75.0" text="Item code" />
+          <TableColumn fx:id="colDes" prefWidth="154.3999786376953" text="description" />
+            <TableColumn fx:id="colUPrice" minWidth="0.0" prefWidth="81.5999755859375" text="unit price" />
+            <TableColumn fx:id="colQty" prefWidth="72.79998779296875" text="Qty" />
+            <TableColumn fx:id="colTotal" prefWidth="106.4000244140625" text="Total" />
+        </columns>
+      </TableView>
+      <JFXButton layoutX="467.0" layoutY="459.0" onAction="#placeOrderbtnOnAction" prefHeight="26.0" prefWidth="84.0" style="-fx-background-color: #44bd32;" text="Place Order" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </JFXButton>
+      <Label layoutX="38.0" layoutY="464.0" prefHeight="26.0" prefWidth="75.0" text="Net Total :">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblNetPrice" layoutX="132.0" layoutY="464.0" prefHeight="26.0" prefWidth="75.0" text="0.0" textFill="#ff4757">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="20.0" layoutY="29.0" text="Customer Information" textFill="#2127c5">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="20.0" layoutY="114.0" text="Item Information" textFill="#0bd243">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="303.0" layoutY="208.0" />
+      <Label layoutX="295.0" layoutY="206.0" text="Quantity : ">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
