@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -17,6 +18,7 @@ import service.ServiceFactory;
 import service.SuperService;
 import service.custom.CustomerService;
 import service.custom.ItemService;
+import service.custom.OrderService;
 import service.custom.impl.CustomerServiceImpl;
 import util.ServiceEnum;
 
@@ -80,8 +82,9 @@ public class OrderFormController implements Initializable {
     @FXML
     private JFXTextField txtOrderId;
 
-    CustomerService service = ServiceFactory.getInstance().getFactory(ServiceEnum.CUSTOMER);
-    ItemService service1 = ServiceFactory.getInstance().getFactory(ServiceEnum.ITEM);
+    CustomerService customerService = ServiceFactory.getInstance().getFactory(ServiceEnum.CUSTOMER);
+    ItemService itemService = ServiceFactory.getInstance().getFactory(ServiceEnum.ITEM);
+    OrderService orderService = ServiceFactory.getInstance().getFactory(ServiceEnum.ORDER);
 
     ArrayList<CartTM> cartTM = new ArrayList<>();
 
@@ -123,13 +126,23 @@ public class OrderFormController implements Initializable {
         });
 
         Order order = new Order(orderId,date,customerId,orderDetails);
-        System.out.println(order);
+//        System.out.println(order);
+
+        try {
+            if (orderService.placeOrder(order)){
+                new Alert(Alert.AlertType.INFORMATION,"Order Completed").show();
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Order Not completed").show();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
     void setCustomerCombValue(){
         try {
-            combCustomer.setItems(FXCollections.observableArrayList(service.getCustomerIds()));
+            combCustomer.setItems(FXCollections.observableArrayList(customerService.getCustomerIds()));
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -138,7 +151,7 @@ public class OrderFormController implements Initializable {
 
     void setItemCombValue(){
         try {
-            comBItem.setItems(FXCollections.observableArrayList(service1.getItemCode()));
+            comBItem.setItems(FXCollections.observableArrayList(itemService.getItemCode()));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -171,7 +184,7 @@ public class OrderFormController implements Initializable {
     }
     void setTextToValuesCustomer(String newValue){
         try {
-            Customer customer = service.search(newValue);
+            Customer customer = customerService.search(newValue);
             txtCusName.setText(customer.getName());
             txtAddress.setText(customer.getAddress());
             txtSalary.setText(customer.getSalary().toString());
@@ -182,7 +195,7 @@ public class OrderFormController implements Initializable {
 
     void setTextToValuesItem(String newValue){
         try {
-            Item item = service1.search(newValue);
+            Item item = itemService.search(newValue);
             txtDescription.setText(item.getDescription());
             txtUnitPrice.setText(item.getUnitPrice().toString());
             txtQtyOnHand.setText(item.getQtyOnHand().toString());

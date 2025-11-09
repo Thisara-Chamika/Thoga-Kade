@@ -1,14 +1,10 @@
 package service.custom.impl;
 
 import model.Customer;
-import repository.CrudRepository;
-import repository.RepositoryFactory1;
 import repository.custom.CustomerRepository;
-import repository.custom.impl.CustomerRepositoryImpl;
 import repository.repositoryFactory;
 import service.custom.CustomerService;
 import util.RepositoryType;
-import util.repoTypes;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

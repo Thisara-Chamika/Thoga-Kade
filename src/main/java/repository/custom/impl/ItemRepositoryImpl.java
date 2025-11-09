@@ -1,6 +1,7 @@
 package repository.custom.impl;
 
 import model.Item;
+import model.OrderDetail;
 import repository.custom.ItemRepository;
 import util.CrudUtil;
 
@@ -41,5 +42,22 @@ public class ItemRepositoryImpl implements ItemRepository {
     @Override
     public boolean update(Item item) throws SQLException {
         return CrudUtil.execute("UPDATE item SET description = ?,unitPrice = ?,qtyOnHand = ? WHERE code = ?",item.getDescription(),item.getUnitPrice(),item.getQtyOnHand(),item.getCode());
+    }
+
+    @Override
+    public boolean updateStock(ArrayList<OrderDetail> orderDetailsArrayList) throws SQLException {
+        for (OrderDetail orderDetail : orderDetailsArrayList){
+            boolean isUpdateStock = updateStock(orderDetail);
+            if (!isUpdateStock){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean updateStock(OrderDetail orderDetail) throws SQLException {
+        return CrudUtil.execute("UPDATE item set qtyOnHand = qtyOnHand - ? WHERE code = ?",
+                    orderDetail.getQty(),
+                    orderDetail.getItemCode());
     }
 }
